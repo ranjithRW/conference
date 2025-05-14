@@ -1,53 +1,51 @@
+// ManModel.jsx
 import React, { useRef, useState } from 'react';
-import { useGLTF, useTexture } from '@react-three/drei';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import InfoBox from './InfoBox';
+import { Text } from '@react-three/drei';
 
 function ManModel() {
     const modelRef = useRef();
-    const [isClicked, setIsClicked] = useState(false); // State for the info box
-    const [isHovered, setIsHovered] = useState(false); // State for hover effect (optional)
+    const [isClicked, setIsClicked] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
-    const { scene } = useGLTF('/man.glb'); // Path to your GLB file
-    const [hiTexture] = useTexture(['/hi.png']);
+    const { scene } = useGLTF('/man.glb');
 
-    const handleClick = () => {
-        setIsClicked(!isClicked);
-    };
+    const handleClick = () => setIsClicked(!isClicked);
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
 
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
-
-    // Calculate the bounding box to get the model's size
     const boundingBox = new THREE.Box3().setFromObject(scene);
     const modelHeight = boundingBox.max.y - boundingBox.min.y;
-    const modelWidth = boundingBox.max.x - boundingBox.min.x;
+    const labelYOffset = modelHeight + 0.3; // Show above head
 
-    // Adjust the label position and size as needed, adjust the scales
-    const labelScale = 0.2;
-    const labelYOffset = modelHeight / 2 + 0.2;
+    const modelName = "ergf"; // Replace with dynamic name if needed
 
     return (
-        <group ref={modelRef} position={[0, 0, 0]}
-               onClick={handleClick}
-               onPointerEnter={handleMouseEnter}
-               onPointerLeave={handleMouseLeave}
-               castShadow
+        <group
+            ref={modelRef}
+            position={[0, 0, 0]}
+            onClick={handleClick}
+            onPointerEnter={handleMouseEnter}
+            onPointerLeave={handleMouseLeave}
+            castShadow
         >
-            <primitive object={scene} scale={0.8}  receiveShadow  /> {/* Render the loaded model */}
-            {/* "Hi" Tag using Plane Geometry and Texture*/}
-            <mesh position={[0, labelYOffset, 0]} scale={[labelScale, labelScale * (hiTexture.image.height / hiTexture.image.width), labelScale]}>
-                <planeGeometry args={[1, 1]} />
-                <meshBasicMaterial map={hiTexture} transparent={true} opacity={isHovered ? 1 : 0.8}  />
-            </mesh>
-            {/* InfoBox - conditionally rendered */}
+            <primitive object={scene} scale={0.8} receiveShadow />
+
+            {/* Always show "Hi, ergf" above the model */}
+            <Text
+                position={[0, labelYOffset, 0]}
+                fontSize={0.2}
+                color="black"
+                anchorX="center"
+                anchorY="middle"
+            >
+                Hi, {modelName}
+            </Text>
+
+            {/* InfoBox appears when clicked */}
             {isClicked && (
-                // <InfoBox modelRef={modelRef} boundingBox={boundingBox} />
                 <InfoBox modelRef={modelRef} boundingBox={boundingBox} />
             )}
         </group>
