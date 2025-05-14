@@ -1,4 +1,3 @@
-// InfoBox.jsx
 import React, { useRef, useEffect, useState } from 'react';
 import { extend } from '@react-three/fiber';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
@@ -42,7 +41,7 @@ function InfoBox({ modelRef, boundingBox }) {
 
     // Text values
     const name = "ergf"; // Replace with dynamic name
-    const age = "65"; // Replace with dynamic age
+    const age = "65";    // Replace with dynamic age
 
     return (
         <group position={[modelCenter.x, infoBoxYOffset, modelCenter.z]}>
@@ -53,25 +52,25 @@ function InfoBox({ modelRef, boundingBox }) {
             </mesh>
 
             {/* Text for Name */}
-            <mesh position={[0, 0.2, 0.1]} scale={[infoBoxScale, infoBoxScale, infoBoxScale]}>
+            <mesh position={[-0.45, 0.2, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
                 <textGeometry
-                    args={[`Name: ${name}`, { font: font, size: 0.2, height: 0.01 }]}
+                    args={[`Name: ${name}`, { font: font, size: 0.2, height: 0.001 }]}
                     ref={(ref) => {
                         if (ref) textGeometries.current.push(ref.geometry);
                     }}
                 />
-                <meshBasicMaterial color="black" />
+                <meshStandardMaterial color="black" />
             </mesh>
 
             {/* Text for Age */}
-            <mesh position={[0, -0.1, 0.1]} scale={[infoBoxScale, infoBoxScale, infoBoxScale]}>
+            <mesh position={[-0.45, -0.1, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
                 <textGeometry
-                    args={[`Age: ${age}`, { font: font, size: 0.2, height: 0.01 }]}
+                    args={[`Age: ${age}`, { font: font, size: 0.2, height: 0.001 }]}
                     ref={(ref) => {
                         if (ref) textGeometries.current.push(ref.geometry);
                     }}
                 />
-                <meshBasicMaterial color="black" />
+                <meshStandardMaterial color="black" />
             </mesh>
         </group>
     );

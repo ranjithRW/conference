@@ -1,4 +1,3 @@
-// ManModel.jsx
 import React, { useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
@@ -18,9 +17,9 @@ function ManModel() {
 
     const boundingBox = new THREE.Box3().setFromObject(scene);
     const modelHeight = boundingBox.max.y - boundingBox.min.y;
-    const labelYOffset = modelHeight + 0.3; // Show above head
+    const labelYOffset = modelHeight + 0.3;
 
-    const modelName = "ergf"; // Replace with dynamic name if needed
+    const modelName = "ergf";
 
     return (
         <group
@@ -33,16 +32,18 @@ function ManModel() {
         >
             <primitive object={scene} scale={0.8} receiveShadow />
 
-            {/* Always show "Hi, ergf" above the model */}
-            <Text
-                position={[0, labelYOffset, 0]}
-                fontSize={0.2}
-                color="black"
-                anchorX="center"
-                anchorY="middle"
-            >
-                Hi, {modelName}
-            </Text>
+            {/* Show label only when InfoBox is not visible */}
+            {!isClicked && (
+                <Text
+                    position={[0, labelYOffset, 0]}
+                    fontSize={0.2}
+                    color="black"
+                    anchorX="center"
+                    anchorY="middle"
+                >
+                    Hi, {modelName}
+                </Text>
+            )}
 
             {/* InfoBox appears when clicked */}
             {isClicked && (
