@@ -23,7 +23,7 @@ const App = () => {
   const { ConferenceScale, ConferencePosition } = adjustConferenceScreen();
   return (
     <div className='w-full h-screen'>
-      <Canvas className='w-full h-screen bg-transparent' camera={{ near: 0.1, far: 1000}}> {/* Adjust camera position */}
+      <Canvas className='w-full h-screen bg-transparent' camera={{ near: 0.1, far: 1000, position: [0, 2, 5] }}> {/* Adjust camera position for a better initial view */}
         <Suspense fallback={null}>
           <directionalLight position={[0, 10, 5]} intensity={0.8} /> {/* Move directional light up */}
           <ambientLight intensity={0.4} />
@@ -34,15 +34,15 @@ const App = () => {
             groundColor={0x0000ff} // blue light
             intensity={0.3} // Reduce intensity for better balance
           />
-         <Conference 
-         scale={ConferenceScale} 
-         position={ConferencePosition}
-         rotation={[0, 0, 0]}
-      
-         args={[0, 0, 0]}
-         dispose={null}         
-         /> 
-          <OrbitControls /> {/* Add OrbitControls */}
+          <Conference
+            scale={ConferenceScale}
+            position={ConferencePosition}
+            rotation={[0, 0, 0]}
+          />
+          <OrbitControls
+
+
+          /> {/* Add OrbitControls */}
         </Suspense>
       </Canvas>
     </div>
