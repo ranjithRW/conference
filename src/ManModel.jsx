@@ -34,7 +34,7 @@ function ManModel({ position = [0, 0, 0], resource }) { // Now receives the enti
                     anchorX="center"
                     anchorY="middle"
                 >
-                    {resource.resource}
+                    {"sudhip"}
                 </Text>
             )}
 

@@ -41,24 +41,24 @@ function InfoBox({ modelRef, boundingBox, resourceData }) { // Receive resourceD
     if (!font) return null; // Don't render until font is loaded
 
     // Use the resourceData to display the information
-    const bandwidth = resourceData.bandwidthToday || "N/A";  // Handle potential undefined values
-    const closingRate = resourceData.closingRate || "N/A";
-    const openIssues = resourceData.openIssues || "N/A";
-    const closedIssues = resourceData.closedIssues || "N/A";
-    const delayedIssueCount = resourceData.delayedIssueCount || "N/A";
+    const bandwidth =" 0.36" // Handle potential undefined values
+    const closingRate = "71.2"
+    const openIssues = "25"
+    const closedIssues = "62"
+    const delayedIssueCount = "5"
 
     return (
         <group position={[modelCenter.x, infoBoxYOffset, modelCenter.z]}>
             {/* Background Box */}
-            <mesh scale={[2 * infoBoxScale, 2.5 * infoBoxScale, 0.1 * infoBoxScale]} position={[0, 0, 0]}>
+            <mesh scale={[6 * infoBoxScale, 4.5 * infoBoxScale, 0.1 * infoBoxScale]} position={[0, 1.4, 0]}>
                 <planeGeometry />
                 <meshBasicMaterial color="white" opacity={0.75} transparent />
             </mesh>
 
             {/* Text for Bandwidth */}
-            <mesh position={[-0.9, 0.6, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+            <mesh position={[-1, 2, 0]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
                 <textGeometry
-                    args={[`Bandwidth: ${bandwidth}`, { font: font, size: 0.2, height: 0.001 }]}
+                    args={[`Bandwidth: ${bandwidth}`, { font: font, size: 0.4, height: 0.001 }]}
                     ref={(ref) => {
                         if (ref) textGeometries.current.push(ref.geometry);
                     }}
@@ -67,9 +67,9 @@ function InfoBox({ modelRef, boundingBox, resourceData }) { // Receive resourceD
             </mesh>
 
             {/* Text for Closing Rate */}
-            <mesh position={[-0.9, 0.25, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+            <mesh position={[-1, 1.7, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
                 <textGeometry
-                    args={[`Closing Rate: ${closingRate}`, { font: font, size: 0.2, height: 0.001 }]}
+                    args={[`Closing Rate: ${closingRate}`, { font: font, size: 0.4, height: 0.001 }]}
                     ref={(ref) => {
                         if (ref) textGeometries.current.push(ref.geometry);
                     }}
@@ -78,9 +78,9 @@ function InfoBox({ modelRef, boundingBox, resourceData }) { // Receive resourceD
             </mesh>
 
             {/* Text for Open Issues */}
-            <mesh position={[-0.9, -0.1, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+            <mesh position={[-1, 1.4, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
                 <textGeometry
-                    args={[`Open Issues: ${openIssues}`, { font: font, size: 0.2, height: 0.001 }]}
+                    args={[`Open Issues: ${openIssues}`, { font: font, size: 0.4, height: 0.001 }]}
                     ref={(ref) => {
                         if (ref) textGeometries.current.push(ref.geometry);
                     }}
@@ -89,9 +89,9 @@ function InfoBox({ modelRef, boundingBox, resourceData }) { // Receive resourceD
             </mesh>
 
             {/* Text for Closed Issues */}
-            <mesh position={[-0.9, -0.45, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+            <mesh position={[-1, 1.1, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
                 <textGeometry
-                    args={[`Closed Issues: ${closedIssues}`, { font: font, size: 0.2, height: 0.001 }]}
+                    args={[`Closed Issues: ${closedIssues}`, { font: font, size: 0.4, height: 0.001 }]}
                     ref={(ref) => {
                         if (ref) textGeometries.current.push(ref.geometry);
                     }}
@@ -100,9 +100,9 @@ function InfoBox({ modelRef, boundingBox, resourceData }) { // Receive resourceD
             </mesh>
 
             {/* Text for Delayed Issues */}
-            <mesh position={[-0.9, -0.8, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+            <mesh position={[-1, 0.7, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
                 <textGeometry
-                    args={[`Delayed Issues: ${delayedIssueCount}`, { font: font, size: 0.2, height: 0.001 }]}
+                    args={[`Delayed Issues: ${delayedIssueCount}`, { font: font, size: 0.4, height: 0.001 }]}
                     ref={(ref) => {
                         if (ref) textGeometries.current.push(ref.geometry);
                     }}
