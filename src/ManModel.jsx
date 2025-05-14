@@ -4,35 +4,25 @@ import * as THREE from 'three';
 import InfoBox from './InfoBox';
 import { Text } from '@react-three/drei';
 
-function ManModel() {
+function ManModel({ position = [0, 0, 0], modelName = "Person" }) {
     const modelRef = useRef();
     const [isClicked, setIsClicked] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
 
     const { scene } = useGLTF('/man.glb');
-
-    const handleClick = () => setIsClicked(!isClicked);
-    const handleMouseEnter = () => setIsHovered(true);
-    const handleMouseLeave = () => setIsHovered(false);
 
     const boundingBox = new THREE.Box3().setFromObject(scene);
     const modelHeight = boundingBox.max.y - boundingBox.min.y;
     const labelYOffset = modelHeight + 0.3;
 
-    const modelName = "ergf";
-
     return (
         <group
             ref={modelRef}
-            position={[0, 0, 0]}
-            onClick={handleClick}
-            onPointerEnter={handleMouseEnter}
-            onPointerLeave={handleMouseLeave}
+            position={position}
+            onClick={() => setIsClicked(!isClicked)}
             castShadow
         >
             <primitive object={scene} scale={0.8} receiveShadow />
 
-            {/* Show label only when InfoBox is not visible */}
             {!isClicked && (
                 <Text
                     position={[0, labelYOffset, 0]}
@@ -45,12 +35,12 @@ function ManModel() {
                 </Text>
             )}
 
-            {/* InfoBox appears when clicked */}
             {isClicked && (
                 <InfoBox modelRef={modelRef} boundingBox={boundingBox} />
             )}
         </group>
     );
 }
+
 
 export default ManModel;
