@@ -1,4 +1,3 @@
-// manmodel.jsx
 import React, { useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
@@ -27,7 +26,7 @@ function ManModel({ position = [0, 0, 0], resource }) { // Now receives the enti
         >
             <primitive object={scene} scale={2} receiveShadow />
 
-            {!isClicked && (
+            {!isClicked && resource && (  // Add check for resource
                 <Text
                     position={[0, labelYOffset, 0]}
                     fontSize={0.2}
@@ -35,11 +34,11 @@ function ManModel({ position = [0, 0, 0], resource }) { // Now receives the enti
                     anchorX="center"
                     anchorY="middle"
                 >
-                    Hi, {resource.resource}
+                    {resource.resource}
                 </Text>
             )}
 
-            {isClicked && (
+            {isClicked && resource && ( // Add check for resource
                 <InfoBox modelRef={modelRef} boundingBox={boundingBox} resourceData={resource} /> // Pass the resource data
             )}
         </group>

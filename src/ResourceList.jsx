@@ -1,4 +1,3 @@
-// resourcelist.jsx
 import React, { useEffect, useState } from 'react';
 import Scene from './Scence'; // Fixed import
 //import ManModel from './ManModel';
