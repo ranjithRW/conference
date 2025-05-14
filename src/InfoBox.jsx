@@ -1,3 +1,4 @@
+// infobox.jsx
 import React, { useRef, useEffect, useState } from 'react';
 import { extend } from '@react-three/fiber';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
@@ -6,7 +7,7 @@ import * as THREE from 'three';
 
 extend({ TextGeometry });
 
-function InfoBox({ modelRef, boundingBox }) {
+function InfoBox({ modelRef, boundingBox, resourceData }) { // Receive resourceData
     const modelCenter = boundingBox.getCenter(new THREE.Vector3());
     const infoBoxYOffset = boundingBox.max.y + 0.5;
     const infoBoxScale = 0.5;
@@ -39,22 +40,25 @@ function InfoBox({ modelRef, boundingBox }) {
 
     if (!font) return null; // Don't render until font is loaded
 
-    // Text values
-    const name = "ergf"; // Replace with dynamic name
-    const age = "65";    // Replace with dynamic age
+    // Use the resourceData to display the information
+    const bandwidth = resourceData.bandwidthToday || "N/A";  // Handle potential undefined values
+    const closingRate = resourceData.closingRate || "N/A";
+    const openIssues = resourceData.openIssues || "N/A";
+    const closedIssues = resourceData.closedIssues || "N/A";
+    const delayedIssueCount = resourceData.delayedIssueCount || "N/A";
 
     return (
         <group position={[modelCenter.x, infoBoxYOffset, modelCenter.z]}>
             {/* Background Box */}
-            <mesh scale={[2 * infoBoxScale, 1.2 * infoBoxScale, 0.1 * infoBoxScale]} position={[0, 0, 0]}>
+            <mesh scale={[2 * infoBoxScale, 2.5 * infoBoxScale, 0.1 * infoBoxScale]} position={[0, 0, 0]}>
                 <planeGeometry />
                 <meshBasicMaterial color="white" opacity={0.75} transparent />
             </mesh>
 
-            {/* Text for Name */}
-            <mesh position={[-0.45, 0.2, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+            {/* Text for Bandwidth */}
+            <mesh position={[-0.9, 0.6, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
                 <textGeometry
-                    args={[`Name: ${name}`, { font: font, size: 0.2, height: 0.001 }]}
+                    args={[`Bandwidth: ${bandwidth}`, { font: font, size: 0.2, height: 0.001 }]}
                     ref={(ref) => {
                         if (ref) textGeometries.current.push(ref.geometry);
                     }}
@@ -62,10 +66,43 @@ function InfoBox({ modelRef, boundingBox }) {
                 <meshStandardMaterial color="black" />
             </mesh>
 
-            {/* Text for Age */}
-            <mesh position={[-0.45, -0.1, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+            {/* Text for Closing Rate */}
+            <mesh position={[-0.9, 0.25, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
                 <textGeometry
-                    args={[`Age: ${age}`, { font: font, size: 0.2, height: 0.001 }]}
+                    args={[`Closing Rate: ${closingRate}`, { font: font, size: 0.2, height: 0.001 }]}
+                    ref={(ref) => {
+                        if (ref) textGeometries.current.push(ref.geometry);
+                    }}
+                />
+                <meshStandardMaterial color="black" />
+            </mesh>
+
+            {/* Text for Open Issues */}
+            <mesh position={[-0.9, -0.1, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+                <textGeometry
+                    args={[`Open Issues: ${openIssues}`, { font: font, size: 0.2, height: 0.001 }]}
+                    ref={(ref) => {
+                        if (ref) textGeometries.current.push(ref.geometry);
+                    }}
+                />
+                <meshStandardMaterial color="black" />
+            </mesh>
+
+            {/* Text for Closed Issues */}
+            <mesh position={[-0.9, -0.45, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+                <textGeometry
+                    args={[`Closed Issues: ${closedIssues}`, { font: font, size: 0.2, height: 0.001 }]}
+                    ref={(ref) => {
+                        if (ref) textGeometries.current.push(ref.geometry);
+                    }}
+                />
+                <meshStandardMaterial color="black" />
+            </mesh>
+
+            {/* Text for Delayed Issues */}
+            <mesh position={[-0.9, -0.8, 0.01]} scale={[infoBoxScale, infoBoxScale, 0.001]}>
+                <textGeometry
+                    args={[`Delayed Issues: ${delayedIssueCount}`, { font: font, size: 0.2, height: 0.001 }]}
                     ref={(ref) => {
                         if (ref) textGeometries.current.push(ref.geometry);
                     }}

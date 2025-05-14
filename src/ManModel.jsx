@@ -1,27 +1,31 @@
+// manmodel.jsx
 import React, { useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import InfoBox from './InfoBox';
 import { Text } from '@react-three/drei';
 
-function ManModel({ position = [0, 0, 0], modelName = "Person" }) {
+function ManModel({ position = [0, 0, 0], resource }) { // Now receives the entire resource object
     const modelRef = useRef();
     const [isClicked, setIsClicked] = useState(false);
-
     const { scene } = useGLTF('/man.glb');
 
     const boundingBox = new THREE.Box3().setFromObject(scene);
     const modelHeight = boundingBox.max.y - boundingBox.min.y;
     const labelYOffset = modelHeight + 0.3;
 
+    const handleClick = () => {
+        setIsClicked(!isClicked);
+    };
+
     return (
         <group
             ref={modelRef}
             position={position}
-            onClick={() => setIsClicked(!isClicked)}
+            onClick={handleClick}
             castShadow
         >
-            <primitive object={scene} scale={0.8} receiveShadow />
+            <primitive object={scene} scale={2} receiveShadow />
 
             {!isClicked && (
                 <Text
@@ -31,16 +35,15 @@ function ManModel({ position = [0, 0, 0], modelName = "Person" }) {
                     anchorX="center"
                     anchorY="middle"
                 >
-                    Hi, {modelName}
+                    Hi, {resource.resource}
                 </Text>
             )}
 
             {isClicked && (
-                <InfoBox modelRef={modelRef} boundingBox={boundingBox} />
+                <InfoBox modelRef={modelRef} boundingBox={boundingBox} resourceData={resource} /> // Pass the resource data
             )}
         </group>
     );
 }
-
 
 export default ManModel;
